@@ -34,22 +34,37 @@ dependencies:
   # Styles
   cupertino_icons: ^1.0.6
 
+  # Кеширование
+  cached_network_image: ^3.3.1
+
   # DI
   provider: ^6.1.2
 
-  # Async and Rx
+  # Async and Rxdart
   async:
   rxdart: ^0.27.7
 
   # Supabase
   supabase_flutter: ^2.5.2
+
+  # Навигация
   go_router: ^14.0.2
 
-  # Platform
+  # Взаимодействие с платформой
   image_picker: ^1.1.1
 
   # Crypto
   crypto: ^3.0.3
+
+  # Локализация
+  intl: ^0.19.0
+
+  # Сопоставление моделей
+  equatable: ^2.0.5
+
+  # Кодогенерация
+  freezed_annotation: ^2.4.1
+  json_annotation: ^4.9.0
 
 dev_dependencies:
   flutter_test:
@@ -61,6 +76,11 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^3.0.0
+
+  # Кодогенерация
+  build_runner: ^2.4.9
+  freezed: ^2.5.2
+  json_serializable: ^6.8.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

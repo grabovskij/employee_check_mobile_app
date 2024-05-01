@@ -23,8 +23,9 @@ extension ImageSourceTO on ImageDataSource {
 class PhotoPickingDataSource {
   static final ImagePicker _picker = ImagePicker();
 
-  Future<File?> getPhoto(
-      [ImageDataSource source = ImageDataSource.gallery]) async {
+  Future<File?> getPhoto([
+    ImageDataSource source = ImageDataSource.gallery,
+  ]) async {
     final XFile? image = await _picker.pickImage(source: source.toTO);
 
     if (image == null) {

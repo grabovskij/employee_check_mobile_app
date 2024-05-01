@@ -32,7 +32,7 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Вход'),
+        title: const Text('Регистрация'),
       ),
       body: SafeArea(
         child: InkWell(
@@ -58,9 +58,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       return Padding(
                         padding: const EdgeInsets.only(top: 16),
                         child: FilledButton(
-                          onPressed: formComplete.data ?? false
-                              ? _signUpController.signUp
-                              : null,
+                          onPressed: formComplete.data ?? false ? _signUpController.signUp : null,
                           child: const Text('Войти'),
                         ),
                       );

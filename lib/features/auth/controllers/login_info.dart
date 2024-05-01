@@ -26,6 +26,10 @@ class LoginInfo with ChangeNotifier {
     BuildContext context,
     GoRouterState state,
   ) async {
+    if (state.uri.path == '${AppRoutes.sign.path}/${AppRoutes.signUp.path}') {
+      return null;
+    }
+
     if (!isLogin) {
       return AppRoutes.sign.path;
     }

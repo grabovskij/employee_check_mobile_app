@@ -61,7 +61,7 @@ class _SignPageState extends State<SignPage> {
                   ),
                 ),
                 FilledButton(
-                  onPressed: () => context.pushNamed(AppRoutes.signUp.name),
+                  onPressed: () => context.goNamed(AppRoutes.signUp.name),
                   child: const Text('Зарегистрироваться'),
                 ),
               ],

@@ -4,6 +4,8 @@ import 'package:mobile_app/features/auth/controllers/login_info.dart';
 import 'package:mobile_app/features/auth/pages/sign_up_page.dart';
 import 'package:mobile_app/features/auth/pages/sing_page.dart';
 import 'package:mobile_app/features/home/home_screen.dart';
+import 'package:mobile_app/features/reports/report_details_page.dart';
+import 'package:mobile_app/features/reports/report_page.dart';
 
 abstract final class AppRouter {
   static GoRouter create(LoginInfo loginInfo) {
@@ -16,6 +18,20 @@ abstract final class AppRouter {
           name: AppRoutes.home.name,
           path: AppRoutes.home.path,
           builder: (context, state) => const HomePage(),
+          routes: [
+            GoRoute(
+              name: AppRoutes.reports.name,
+              path: AppRoutes.reports.path,
+              builder: (context, state) => const ReportPage(),
+              routes: [
+                GoRoute(
+                  name: AppRoutes.reportDetails.name,
+                  path: AppRoutes.reportDetails.path,
+                  builder: (context, state) => const ReportDetailsPage(),
+                ),
+              ],
+            ),
+          ],
         ),
         GoRoute(
           name: AppRoutes.sign.name,

@@ -60,10 +60,7 @@ class UserCheckController {
     try {
       final path = await _userPhotoDataSource.uploadPhoto(photo);
 
-      _checkingDataSource.a(
-        photo: path,
-        enter: true,
-      );
+      _checkingDataSource.makeEmployeeCheck(photo: path, isEnter: true);
 
       _stateSubject.add(CheckingSuccessState());
     } catch (e) {
