@@ -4,7 +4,7 @@ abstract final class AppRoutes {
   // Root
   static const AppRoute home = (name: 'home', path: '/');
 
-  // Reports
+  // Reports - sub-routes of home
   static const AppRoute reports = (name: 'reports', path: 'reports');
   static const AppRoute reportDetails = (name: 'reportDetails', path: 'report-details');
 

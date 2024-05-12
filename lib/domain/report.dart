@@ -6,6 +6,8 @@ class Report extends Equatable {
   final bool isEnter;
   final String photo;
   final String userId;
+  final double latitude;
+  final double longitude;
 
   const Report({
     required this.id,
@@ -13,6 +15,8 @@ class Report extends Equatable {
     required this.isEnter,
     required this.photo,
     required this.userId,
+    required this.latitude,
+    required this.longitude,
   });
 
   @override
@@ -22,5 +26,7 @@ class Report extends Equatable {
         isEnter,
         photo,
         userId,
+        latitude,
+        longitude,
       ];
 }

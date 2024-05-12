@@ -16,6 +16,18 @@ class ReportsLoadedView extends StatelessWidget {
   Widget build(BuildContext context) {
     const imageSize = 45.0;
 
+    if (reports.isEmpty) {
+      return const Padding(
+        padding: EdgeInsets.all(16),
+        child: Center(
+          child: Text(
+            'У вас еще нет отчетов о начале/завершении рабочего дня',
+            textAlign: TextAlign.center,
+          ),
+        ),
+      );
+    }
+
     return Padding(
       padding: const EdgeInsets.all(16),
       child: ListView.builder(

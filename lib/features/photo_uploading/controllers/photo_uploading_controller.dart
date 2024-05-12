@@ -1,7 +1,8 @@
 import 'package:flutter/widgets.dart';
-import 'package:mobile_app/data/data_sources/checking_data_source.dart';
+import 'package:mobile_app/core/utils/geolocator.dart';
+import 'package:mobile_app/data/data_sources/local_data_sources/employee_reports_data_source/employee_reports_data_source.dart';
 import 'package:mobile_app/data/data_sources/photo_picking_data_source.dart';
-import 'package:mobile_app/data/data_sources/user_photo_data_source.dart';
+import 'package:mobile_app/data/data_sources/remote_data_sources/files_data_source.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -21,22 +22,20 @@ class CheckingErrorState extends CheckingState {
 
 class UserCheckController {
   final PhotoPickingDataSource _pickingDataSource;
-  final UserPhotoDataSource _userPhotoDataSource;
+  final FilesDataSource _userPhotoDataSource;
   final CheckingDataSource _checkingDataSource;
 
-  final _stateSubject =
-      BehaviorSubject<CheckingState>.seeded(CheckingInitialState());
+  final _stateSubject = BehaviorSubject<CheckingState>.seeded(CheckingInitialState());
 
   UserCheckController({
     required CheckingDataSource checkingDataSource,
     required PhotoPickingDataSource pickingDataSource,
-    required UserPhotoDataSource userPhotoDataSource,
+    required FilesDataSource userPhotoDataSource,
   })  : _checkingDataSource = checkingDataSource,
         _pickingDataSource = pickingDataSource,
         _userPhotoDataSource = userPhotoDataSource;
 
-  factory UserCheckController.create(BuildContext context) =>
-      UserCheckController(
+  factory UserCheckController.create(BuildContext context) => UserCheckController(
         checkingDataSource: context.read(),
         pickingDataSource: context.read(),
         userPhotoDataSource: context.read(),
@@ -46,10 +45,19 @@ class UserCheckController {
 
   Stream<CheckingState> get stateStream => _stateSubject;
 
-  Future<void> a() async {
+  Future<void> createReport({
+    bool enterStatus = true,
+  }) async {
     _stateSubject.add(CheckingWaitingState());
+    Geolocation geolocation;
 
-    final photo = await _pickingDataSource.getPhoto();
+    try {
+      geolocation = await determinePosition();
+    } catch (e) {
+      return _stateSubject.add(CheckingErrorState('Не удалось получить доступ к местоположению'));
+    }
+
+    final photo = await _pickingDataSource.getPhoto(ImageDataSource.camera);
 
     if (photo == null) {
       _stateSubject.add(CheckingErrorState('Не удалось получить фото'));
@@ -60,7 +68,11 @@ class UserCheckController {
     try {
       final path = await _userPhotoDataSource.uploadPhoto(photo);
 
-      _checkingDataSource.makeEmployeeCheck(photo: path, isEnter: true);
+      _checkingDataSource.createEmployeeReport(
+        photo: path,
+        enterStatus: enterStatus,
+        geolocation: geolocation,
+      );
 
       _stateSubject.add(CheckingSuccessState());
     } catch (e) {

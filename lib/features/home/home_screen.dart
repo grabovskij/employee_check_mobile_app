@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile_app/configuration/navigation/app_routes.dart';
-import 'package:mobile_app/data/data_sources/checking_data_source.dart';
 import 'package:mobile_app/features/auth/controllers/login_info.dart';
 import 'package:mobile_app/features/home/widgets/menu_card.dart';
 import 'package:mobile_app/features/photo_uploading/controllers/photo_uploading_controller.dart';
@@ -15,6 +14,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final pageHorizontalPadding = 16.0;
+  final cardHorizontalPadding = 8.0;
+  final cardVerticalPadding = 8.0;
+
   late final UserCheckController userCheckController;
 
   @override
@@ -25,61 +28,50 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraints) {
-      const pageHorizontalPadding = 16.0;
-      const cardHorizontalPadding = 8.0;
-      const cardVerticalPadding = 8.0;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final cardSize = (constraints.maxWidth - 2 * pageHorizontalPadding - cardHorizontalPadding) / 2;
 
-      final cardSize = (constraints.maxWidth - 2 * pageHorizontalPadding - cardHorizontalPadding) / 2;
-
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text('Home'),
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(pageHorizontalPadding),
-          child: Column(
-            children: [
-              Wrap(
-                spacing: cardHorizontalPadding,
-                runSpacing: cardVerticalPadding,
-                children: [
-                  MenuCard(
-                    size: cardSize,
-                    onTap: () => context.goNamed(AppRoutes.reports.name),
-                    child: const Text('Отчеты'),
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Home'),
+            backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+            actions: [
+              Padding(
+                padding: const EdgeInsets.only(right: 6),
+                child: GestureDetector(
+                  onTap: () => context.read<LoginInfo>().signOut(),
+                  child: const Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Icon(Icons.logout),
                   ),
-                  MenuCard(
-                    size: cardSize,
-                    child: Text('1'),
-                  ),
-                  MenuCard(
-                    size: cardSize,
-                    child: Text('1'),
-                  ),
-                  MenuCard(
-                    size: cardSize,
-                    child: Text('1'),
-                  ),
-                ],
+                ),
               ),
-              const Text('You have pushed the button this many times:'),
-              FilledButton(
-                onPressed: () => context.read<LoginInfo>().signOut(),
-                child: const Text('Выйти'),
-              ),
-              FilledButton(
-                onPressed: context.read<CheckingDataSource>().getReports,
-                child: const Text('Проверить отметки'),
-              )
             ],
           ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: userCheckController.a,
-        ),
-      );
-    });
+          body: Padding(
+            padding: EdgeInsets.all(pageHorizontalPadding),
+            child: Column(
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  child: Wrap(
+                    spacing: cardHorizontalPadding,
+                    runSpacing: cardVerticalPadding,
+                    children: [
+                      MenuCard(
+                        size: cardSize,
+                        onTap: () => context.goNamed(AppRoutes.reports.name),
+                        child: const Text('Отчеты'),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 }

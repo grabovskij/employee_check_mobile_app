@@ -6,7 +6,7 @@ class _SupabaseConfig {
   final String url = const String.fromEnvironment(
     'SUPABASE_URL',
     // FIXME (grabowski): Убрать из сборки и добавить в переменные окружения
-    defaultValue: 'http://192.168.31.134:8000',
+    defaultValue: 'http://192.168.31.132:8000',
   );
   final String anonKey = const String.fromEnvironment(
     'SUPABASE_ANON_KEY',

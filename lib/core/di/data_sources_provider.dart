@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/data/data_sources/checking_data_source.dart';
+import 'package:mobile_app/data/data_sources/local_data_sources/employee_reports_data_source/employee_reports_data_source.dart';
 import 'package:mobile_app/data/data_sources/photo_picking_data_source.dart';
-import 'package:mobile_app/data/data_sources/user_photo_data_source.dart';
+import 'package:mobile_app/data/data_sources/remote_data_sources/files_data_source.dart';
 import 'package:provider/provider.dart';
 
 class DataSourcesProvider extends StatefulWidget {
@@ -17,7 +17,7 @@ class DataSourcesProvider extends StatefulWidget {
 }
 
 class _DataSourcesProvidersState extends State<DataSourcesProvider> {
-  late final UserPhotoDataSource userPhotoDataSource;
+  late final FilesDataSource userPhotoDataSource;
   late final CheckingDataSource checkingDataSource;
   late final PhotoPickingDataSource photoPickingDataSource;
 
@@ -40,7 +40,7 @@ class _DataSourcesProvidersState extends State<DataSourcesProvider> {
   }
 
   void _initSources() {
-    userPhotoDataSource = UserPhotoDataSource(context.read());
+    userPhotoDataSource = FilesDataSource(context.read());
     checkingDataSource = CheckingDataSource(context.read());
     photoPickingDataSource = PhotoPickingDataSource();
   }
