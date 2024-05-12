@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:mobile_app/data/data_sources/local_data_sources/employee_reports_data_source/employee_reports_data_source.dart';
 import 'package:mobile_app/domain/report.dart';
 import 'package:rxdart/rxdart.dart';
@@ -33,6 +35,8 @@ class ReportsController {
 
       _stateSubject.add(ReportsLoadedState(reports));
     } catch (e) {
+      log(e.toString());
+
       _stateSubject.add(ReportsErrorState());
     }
   }

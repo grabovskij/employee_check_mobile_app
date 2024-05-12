@@ -1,9 +1,13 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile_app/configuration/navigation/app_routes.dart';
+import 'package:mobile_app/data/data_sources/remote_data_sources/profile_data_source/profile_data_source.dart';
 import 'package:mobile_app/features/auth/controllers/login_info.dart';
 import 'package:mobile_app/features/home/widgets/menu_card.dart';
 import 'package:mobile_app/features/photo_uploading/controllers/photo_uploading_controller.dart';
+import 'package:mobile_app/features/reports/widgets/user_session_info_widget.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,12 +22,12 @@ class _HomePageState extends State<HomePage> {
   final cardHorizontalPadding = 8.0;
   final cardVerticalPadding = 8.0;
 
-  late final UserCheckController userCheckController;
+  late final UserReportController userCheckController;
 
   @override
   void initState() {
     super.initState();
-    userCheckController = UserCheckController.create(context);
+    userCheckController = UserReportController.create(context);
   }
 
   @override
@@ -53,6 +57,7 @@ class _HomePageState extends State<HomePage> {
             padding: EdgeInsets.all(pageHorizontalPadding),
             child: Column(
               children: [
+                const UserSessionInfo(),
                 SizedBox(
                   width: double.infinity,
                   child: Wrap(
@@ -63,6 +68,11 @@ class _HomePageState extends State<HomePage> {
                         size: cardSize,
                         onTap: () => context.goNamed(AppRoutes.reports.name),
                         child: const Text('Отчеты'),
+                      ),
+                      MenuCard(
+                        size: cardSize,
+                        onTap: () => context.goNamed(AppRoutes.profile.name),
+                        child: const Text('Профиль'),
                       ),
                     ],
                   ),

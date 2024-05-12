@@ -8,6 +8,9 @@ abstract final class AppRoutes {
   static const AppRoute reports = (name: 'reports', path: 'reports');
   static const AppRoute reportDetails = (name: 'reportDetails', path: 'report-details');
 
+  // Profile - sub-routes of home
+  static const AppRoute profile = (name: 'profile', path: 'profile');
+
   // Auth
   static const AppRoute sign = (name: 'sign', path: '/sign');
   static const AppRoute signUp = (name: 'signUp', path: 'signUp');

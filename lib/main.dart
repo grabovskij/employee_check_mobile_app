@@ -20,5 +20,5 @@ Future<void> main() async {
 
   final dependency = Dependency(supabase: supabase.client);
 
-  runApp(MyApp(dependency));
+  runApp(App(dependency));
 }

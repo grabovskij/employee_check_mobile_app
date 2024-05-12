@@ -4,6 +4,7 @@ import 'package:mobile_app/features/auth/controllers/login_info.dart';
 import 'package:mobile_app/features/auth/pages/sign_up_page.dart';
 import 'package:mobile_app/features/auth/pages/sing_page.dart';
 import 'package:mobile_app/features/home/home_screen.dart';
+import 'package:mobile_app/features/profile/profile_page.dart';
 import 'package:mobile_app/features/reports/report_details_page.dart';
 import 'package:mobile_app/features/reports/report_page.dart';
 
@@ -30,6 +31,11 @@ abstract final class AppRouter {
                   builder: (context, state) => const ReportDetailsPage(),
                 ),
               ],
+            ),
+            GoRoute(
+              name: AppRoutes.profile.name,
+              path: AppRoutes.profile.path,
+              builder: (context, state) => const ProfilePage(),
             ),
           ],
         ),
