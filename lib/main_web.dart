@@ -11,6 +11,7 @@ Future<void> main() async {
 
   final dependency = Dependency(
     supabase: supabase.client,
+    flavor: Flavor.web,
   );
 
   runApplication(dependency);

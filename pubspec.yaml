@@ -49,6 +49,7 @@ dependencies:
 
   # Навигация
   go_router: ^14.0.2
+  url_strategy: ^0.2.0
 
   # Взаимодействие с платформой
   image_picker: ^1.1.1

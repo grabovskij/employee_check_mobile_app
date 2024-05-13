@@ -1,9 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile_app/configuration/navigation/app_routes.dart';
-import 'package:mobile_app/data/data_sources/remote_data_sources/profile_data_source/profile_data_source.dart';
 import 'package:mobile_app/features/auth/controllers/login_info.dart';
 import 'package:mobile_app/features/home/widgets/menu_card.dart';
 import 'package:mobile_app/features/photo_uploading/controllers/photo_uploading_controller.dart';
@@ -34,7 +31,10 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final cardSize = (constraints.maxWidth - 2 * pageHorizontalPadding - cardHorizontalPadding) / 2;
+        final cardSize = (constraints.maxWidth -
+                2 * pageHorizontalPadding -
+                cardHorizontalPadding) /
+            2;
 
         return Scaffold(
           appBar: AppBar(

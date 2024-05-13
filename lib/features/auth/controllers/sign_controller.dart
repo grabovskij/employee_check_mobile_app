@@ -6,16 +6,36 @@ import 'package:mobile_app/core/utils/converters.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+sealed class SignState {}
+
+class SignInitialState extends SignState {}
+
+class SignLoadingState extends SignState {}
+
+class SignSuccessState extends SignState {}
+
+class SignErrorState extends SignState {
+  final String message;
+
+  SignErrorState(this.message);
+}
+
 class SignController {
-  final BehaviorSubject<String> _emailSubject = BehaviorSubject.seeded('');
-  final BehaviorSubject<String> _passSubject = BehaviorSubject.seeded('');
+  final _stateSubject = BehaviorSubject<SignState>.seeded(SignInitialState());
+  final _emailSubject = BehaviorSubject<String>.seeded('');
+  final _passSubject = BehaviorSubject<String>.seeded('');
 
   final SupabaseClient supabase;
   final GoRouter router;
 
   SignController(this.supabase, this.router);
 
+  SignState get state => _stateSubject.value;
+
+  Stream<SignState> get stateStream => _stateSubject;
+
   void dispose() {
+    _stateSubject.close();
     _emailSubject.close();
     _passSubject.close();
   }
@@ -38,22 +58,19 @@ class SignController {
       _passSubject.map((pass) => pass.isNotEmpty);
 
   Future<void> sign() async {
+    _stateSubject.add(SignLoadingState());
+
     try {
       final AuthResponse res = await supabase.auth.signInWithPassword(
         email: _emailSubject.value,
         password: _passSubject.value,
       );
 
-      final Session? session = res.session;
-      final User? user = res.user;
-
+      _stateSubject.add(SignInitialState());
       router.goNamed(AppRoutes.home.name);
     } on AuthException catch (e, s) {
-      log(
-        'Error: ${e.message}',
-        error: e,
-        stackTrace: s,
-      );
+      _stateSubject.add(SignErrorState('Error: ${e.message}'));
+      _stateSubject.add(SignInitialState());
     }
   }
 }
